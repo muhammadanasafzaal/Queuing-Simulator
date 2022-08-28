@@ -1,0 +1,86 @@
+<div class="card-body">
+    <div class="row ">
+        <div class="col-12 mb-2">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add Patient</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="activeModal.dismiss('Cross click')">X</button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <form [formGroup]="PatientDetailsForm" (ngSubmit)="PatientFormOnSubmit()">
+                <h6 class="mb-2">Patient Details</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">First Name</label>
+                            <input type="text" id="name" formControlName="name" class="form-control"
+                                [ngClass]="{ 'is-invalid': PatientFormSubmitted && PatientForm.name.errors }" />
+                            <div *ngIf="PatientFormSubmitted && PatientForm.name.errors" class="invalid-feedback">
+                                <div *ngIf="PatientForm.name.errors.required">First Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="LastName">Last Name</label>
+                            <input type="text" id="LastName" formControlName="lastName" class="form-control"
+                                [ngClass]="{ 'is-invalid': PatientFormSubmitted && PatientForm.lastName.errors }" />
+                            <div *ngIf="PatientFormSubmitted && PatientForm.lastName.errors" class="invalid-feedback">
+                                <div *ngIf="PatientForm.lastName.errors.required">Last Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Gender">Gender</label>
+                            <select id="Gender" formControlName="gender" class="form-control"
+                                [ngClass]="{ 'is-invalid': PatientFormSubmitted && PatientForm.gender.errors }">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <div *ngIf="PatientFormSubmitted && PatientForm.gender.errors" class="invalid-feedback">
+                                <div *ngIf="PatientForm.gender.errors.required">gender is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="diagnosis">Diagnosis</label>
+                            <input type="text" id="diagnosis" formControlName="diagnosis" class="form-control"
+                                [ngClass]="{ 'is-invalid': PatientFormSubmitted && PatientForm.diagnosis.errors }" />
+                            <div *ngIf="PatientFormSubmitted && PatientForm.diagnosis.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="PatientForm.diagnosis.errors.required">Diagnosis is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="treatedByDoctor">Treated By Doctor</label>
+                            <input type="text" id="treatedByDoctor" formControlName="treatedByDoctor" class="form-control" />
+                            <!-- <div *ngIf="PatientFormSubmitted && PatientForm.experience.errors" class="invalid-feedback">
+                                <div *ngIf="PatientForm.experience.errors.required">Experience is required</div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="treatment">Treatment</label>
+                            <input type="text" id="treatment" formControlName="treatment" class="form-control" />
+                            <!-- <div *ngIf="PatientFormSubmitted && PatientForm.experience.errors" class="invalid-feedback">
+                                <div *ngIf="PatientForm.experience.errors.required">Experience is required</div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary" rippleEffect>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

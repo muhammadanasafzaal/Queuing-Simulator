@@ -1,0 +1,733 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row match-height" *ngIf="isAdmin || isClient">
+
+      <!-- Statistics Card -->
+      <div class="col-xl-12 col-md-12 col-12">
+        <div class="card card-statistics">
+          <div class="card-header">
+            <h4 class="card-title">Simulation Statistics of Current Session</h4>
+            <div class="d-flex align-items-center">
+              <button type="button" class="btn btn-primary" rippleEffect (click)="openSimulationDataModal()">Simulate
+                Data</button>
+            </div>
+          </div>
+          <div class="card-body statistics-body">
+            <div class="row">
+
+              <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-info mr-2">
+                    <div class="avatar-content">
+                      <!-- <i data-feather="user-plus" class="avatar-icon"></i> -->
+                      <i data-feather="users" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+
+                    <h4 class="font-weight-bolder mb-0" *ngIf="simData != null; else elsePart2">
+                      {{simData.avgTimeBwArrival
+                      | number : '1.0-0'}}</h4>
+                    <ng-template #elsePart2>
+                      <h4 class="font-weight-bolder mb-0">Not Available</h4>
+                    </ng-template>
+                    <p class="card-text font-small-3 mb-0">Average time between arrival of patients
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-danger mr-2">
+                    <div class="avatar-content">
+                      <!-- <i data-feather="tablet" class="avatar-icon"></i> -->
+                      <i data-feather="watch" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0" *ngIf="simData != null; else elsePart3">
+                      {{simData.avgTimeSpentInSystem | number : '1.2-6'}} <span class="fs-12"> Hrs</span></h4>
+                    <ng-template #elsePart3>
+                      <h4 class="font-weight-bolder mb-0">Not Available</h4>
+                    </ng-template>
+                    <p class="card-text font-small-3 mb-0">Average time patients spends in the hospital</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-success mr-2">
+                    <div class="avatar-content">
+                      <i data-feather="watch" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0" *ngIf="simData != null; else elsePart4">
+                      {{simData.avgWaitTime | number : '1.2-6'}} <span class="fs-12"> Hrs</span></h4>
+                    <ng-template #elsePart4>
+                      <h4 class="font-weight-bolder mb-0">Not Available</h4>
+                    </ng-template>
+                    <p class="card-text font-small-3 mb-0">Average waiting time of a patient</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-primary mr-2">
+                    <div class="avatar-content">
+                      <i data-feather="watch" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0" *ngIf="simData != null; else elsePart5">
+                      {{simData.avgResponseTime | number : '1.2-6'}} </h4>
+                    <ng-template #elsePart5>
+                      <h4 class="font-weight-bolder mb-0">Not Available</h4>
+                    </ng-template>
+                    <p class="card-text font-small-3 mb-0">Average Response Time</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-success mr-2">
+                    <div class="avatar-content">
+                      <i data-feather="pie-chart" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="media-body my-auto">
+                    <h4 class="font-weight-bolder mb-0" *ngIf="simData != null; else elsePart6">
+                      {{simData.meanServiceTime | number : '1.2-6'}} </h4>
+                    <ng-template #elsePart6>
+                      <h4 class="font-weight-bolder mb-0">Not Available</h4>
+                    </ng-template>
+                    <p class="card-text font-small-3 mb-0">Mean Service Time</p>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-sm-6 col-xl-6 mb-1">
+                <div class="media">
+                  <div class="avatar bg-light-primary mr-2 ">
+                    <div class="avatar-content">
+                      <i data-feather="server" class="avatar-icon"></i>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="media-body my-auto">
+                        <div *ngFor="let sr of serverUtilRate">
+                          <h6 class="mt-2" *ngIf="serverUtilRate != null">Server: {{sr.serverNo}}</h6>
+                          <p class="font-weight-bolder mb-0" *ngIf="serverUtilRate != null">
+                            Utilization Rate: {{sr.serverUtilRate | number : '1.0-0'}}%</p>
+                        </div>
+                        <h4 class="font-weight-bolder mb-0" *ngIf="serverUtilRate == null">Not Available</h4>
+                        <p class="card-text font-small-3 mb-0" *ngIf="serverUtilRate == null">Server Utilization</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Statistics Card -->
+
+
+      <!-- Server Utilization Pie Chart -->
+      <div class="col-lg-6 col-md-6 col-12">
+        <div class="card earnings-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">  
+                <h4 class="card-title mb-1">Server Utilization - Pie Chart</h4>
+                <!-- <div class="font-small-2">This Month</div>
+                <h5 class="mb-1">$4055.56</h5>
+                <p class="card-text text-muted font-small-2">
+                  <span class="font-weight-bolder">68.2%</span><span> more earnings than last month.</span>
+                </p> -->
+              </div>
+              <div class="col-12">
+                <div id="earnings-donut-chart" #earningChartRef *ngIf="simData != null">
+                  <apx-chart
+                  [series]="chartOptions.series"
+                  [chart]="chartOptions.chart"
+                  [labels]="chartOptions.labels"
+                  [responsive]="chartOptions.responsive"
+                ></apx-chart>
+                </div>
+                <div *ngIf="simData == null">
+                  Not Available
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Server Utilization Pie Chart -->
+
+
+      <!-- Server Utilization Column Chart -->
+      <div class="col-lg-6 col-md-6 col-12">
+        <div class="card earnings-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="card-title mb-1">Server Utilization - Column Chart</h4>
+                <!-- <div class="font-small-2">This Month</div>
+                <h5 class="mb-1">$4055.56</h5>
+                <p class="card-text text-muted font-small-2">
+                  <span class="font-weight-bolder">68.2%</span><span> more earnings than last month.</span>
+                </p> -->
+              </div>
+              <div class="col-12">
+                <div *ngIf="simData != null">
+                  <apx-chart
+                  [series]="chartOptions2.series"
+                  [chart]="chartOptions2.chart"
+                  [dataLabels]="chartOptions2.dataLabels"
+                  [plotOptions]="chartOptions2.plotOptions"
+                  [yaxis]="chartOptions2.yaxis"
+                  [xaxis]="chartOptions2.xaxis"
+                  [legend]="chartOptions2.legend"
+                  [colors]="chartOptions2.colors"
+                  [grid]="chartOptions2.grid"
+                ></apx-chart>
+                </div>
+                <div *ngIf="simData == null">
+                  Not Available
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Server Utilization Column Chart -->
+
+    </div>
+
+
+    <!-- customer arrival data -->
+     <div class="card card-statistics" *ngIf="simData != null">
+      <div class="card-header">
+        <h4 class="card-title">Arrival of Customers</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="tmpCustArrvData" [scrollbarH]="true">
+          <ngx-datatable-column name="Cumm. Prob" prop="cmProb">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.cmProb}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Cumm. Prob Lookup" prop="cmProbLookup" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.cmProbLookup}}
+            </ng-template>
+          </ngx-datatable-column>
+
+           <ngx-datatable-column name="Min Bw Arrival" prop="minBwArr" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.minBwArr}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Inter Arrival Time" prop="interArrvTime" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.interArrvTime}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Arrival Time" prop="arrvTimeSum" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.arrvTimeSum}}
+            </ng-template>
+          </ngx-datatable-column>
+
+         
+        </ngx-datatable>
+      </div>
+    </div>
+    <!-- customer arrival data -->
+
+
+    <!-- distribution of service time -->
+    <div class="card card-statistics" *ngIf="simData != null">
+      <div class="card-header">
+        <h4 class="card-title">Distribution of Service Time</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="tmpServDistTime" [scrollbarH]="true">
+          <ngx-datatable-column name="Customer" prop="serialNo">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.serialNo}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Service Time" prop="serviceTime" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.serviceTime}}
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+      </div>
+    </div>
+    <!-- distribution of service time -->
+
+
+    <!-- simulation data -->
+    <div class="card card-statistics" *ngIf="simData != null">
+      <div class="card-header">
+        <h4 class="card-title">Simulation Data</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="simDataArr" [scrollbarH]="true">
+          <ngx-datatable-column name="Customer" prop="customer">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.customer}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Inter Arrival Time" prop="interArrival" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.interArrival}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Arrival Time" prop="arrivalTime" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.arrivalTime}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Service Time" prop="endTime" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.endTime}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Server" prop="servicedBy" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.servicedBy}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Server Utilization" prop="serverUtilization" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.serverUtilization}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Turn Around Time" prop="turnAround" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.turnAround}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Wait Time in Queue" prop="waitTimeQueue" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.waitTimeQueue}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Response Time" prop="responseTime" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.responseTime}}
+            </ng-template>
+          </ngx-datatable-column>
+          
+        </ngx-datatable>
+      </div>
+    </div>
+    <!-- simulation data -->
+
+
+
+    <!-- doctor statistics -->
+    <!-- <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">Doctors Available</h4>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-primary" *ngIf="activeSession != null" rippleEffect (click)="openAddDoctorForm(true)">Add Doctor</button>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="rows" [scrollbarH]="true">
+          <ngx-datatable-column name="Name" prop="name">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.name}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Last Name" prop="lastName" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.lastName}}
+            </ng-template>
+          </ngx-datatable-column>
+
+           <ngx-datatable-column name="Session Id" prop="sessionId" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.sessionId}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Gender" prop="gender" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.gender}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Qualification" prop="qualification" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.qualification}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Experience" prop="experience" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.experience}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Session Date" prop="sessionDate" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.sessionDate | date: 'yyyy/MM/dd'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div ngbDropdown container="body">
+                  <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                  </a>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="doctorToEdit(row)"><i
+                        data-feather="edit" class="cursor-pointer mr-50"></i> Edit</a>
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="deleteDoctor(row.id)"><i
+                        data-feather="trash-2" class="cursor-pointer mr-50"></i> Delete</a>
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div> -->
+    <!-- doctor statistics -->
+
+    <!-- patient statistics -->
+    <!-- <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">All Patients</h4>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-primary mr-1" *ngIf="allDoctors.length > 0 && allPatients.length > 0 && allPatientInQueue.length > 0; else emptyPatQueue" rippleEffect (click)="openServicePatient(true)">Service Patients ({{allPatientInQueue.length}})</button>
+          <ng-template #emptyPatQueue>
+            <button type="button" class="btn btn-secondary mr-1">No Patient in Queue</button>
+          </ng-template>
+          <button type="button" class="btn btn-primary" *ngIf="activeSession != null" rippleEffect (click)="openAddPatientForm(true)">Add Patient</button>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="allPatients" [scrollbarH]="true">
+          <ngx-datatable-column name="Session ID" prop="sessionId" [sortable]="false" [width]="100">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.sessionId}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Name" prop="name">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template [width]="150">
+              {{row.name}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Last Name" prop="lastName" [sortable]="false" [width]="150">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.lastName}}
+            </ng-template>
+          </ngx-datatable-column>          
+
+          <ngx-datatable-column name="Service Status" prop="isServiced" [width]="150">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="badge badge-pill badge-light-success" *ngIf="row.isServiced == 1">Done</div>
+              <div class="badge badge-pill badge-light-danger" *ngIf="row.isServiced == 0">Waiting</div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Gender" prop="gender" [sortable]="false" [width]="100">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.gender}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Diagnosis" prop="diagnosis" [sortable]="false" [width]="100">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.diagnosis}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Treated By Doctor" prop="treatedByDoctor" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.treatedByDoctor}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Treatment" prop="treatment" [sortable]="false" [width]="150">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.treatment}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Session Date" prop="sessionDate" [sortable]="false" [width]="150">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.sessionDate | date: 'yyyy/MM/dd'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Total Service Time" prop="totalServiceTime" [sortable]="false" [width]="150">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.totalServiceTime }}
+            </ng-template>
+          </ngx-datatable-column>
+          
+
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+            <ng-template let-row="row" let-name="value"  ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div ngbDropdown container="body">
+                  <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                  </a>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="patientToEdit(row)"><i
+                        data-feather="edit" class="cursor-pointer mr-50"></i> Edit</a>
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="deletePatient(row.id)"><i
+                        data-feather="trash-2" class="cursor-pointer mr-50"></i> Delete</a>
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div> -->
+    <!-- patient statistics -->
+
+
+    <!-- session details -->
+    <!-- <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">All Sessions</h4>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-primary" rippleEffect *ngIf="activeSession == null" (click)="openAddSessionForm(true)">Add Session</button>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="allSessions" [scrollbarH]="true">
+          <ngx-datatable-column name="Session ID" prop="id">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template >
+              {{row.id}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Session Date" prop="sessionDate" [sortable]="false" [width]="150" >
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.sessionDate | date: 'yyyy/MM/dd'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Status" prop="isActive" [sortable]="false" [width]="100">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              
+              <div class="badge badge-pill badge-light-success" *ngIf="row.isActive == 1">Active</div>
+              <div class="badge badge-pill badge-light-danger" *ngIf="row.isActive == 0">Expired</div>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column name="Total Doctors on Service" prop="totalDoctorsOnService" [sortable]="false" [width]="240">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.totalDoctorsOnService}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Total Patients Arrived" prop="totalPatientsArrived" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.totalPatientsArrived}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Session Duration (Hrs)" prop="totalTimeOfEachSession" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              {{row.totalTimeOfEachSession}}
+            </ng-template>
+          </ngx-datatable-column>
+        
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value"  ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div ngbDropdown container="body">
+                  <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                  </a>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="sessionToEdit(row)"><i
+                        data-feather="edit" class="cursor-pointer mr-50"></i> Edit</a>
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="deleteSession(row.id)"><i
+                        data-feather="trash-2" class="cursor-pointer mr-50"></i> Delete</a>
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div> -->
+    <!-- session details -->
+
+
+
+    <!-- arrival of each customer -->
+    <!-- 
+    <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">Arrival of Each Customer</h4>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-primary" rippleEffect *ngIf="activeSession == null"
+            (click)="openAddSessionForm(true)">Add Session</button>
+        </div>
+      </div> -->
+    <!-- <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="allSessions" [scrollbarH]="true">
+
+          <ngx-datatable-column name="Cummulative Probability" prop="" [sortable]="false" [width]="220">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Cummulative Probability Lookup" prop="" [sortable]="false" [width]="280">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Number of Minutes between arrival" prop="" [sortable]="false" [width]="300">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Inter Arrival Time" prop="" [sortable]="false" [width]="250">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Arrival Time" prop="" [sortable]="false" [width]="250">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actions" [width]="120" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <div ngbDropdown container="body">
+                  <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                  </a>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                      (click)="sessionToEdit(row)"><i data-feather="edit" class="cursor-pointer mr-50"></i> Edit</a>
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                      (click)="deleteSession(row.id)"><i data-feather="trash-2" class="cursor-pointer mr-50"></i>
+                      Delete</a>
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div> -->
+
+    <!-- arrival of each customer -->
+
+    <!-- distribution of service time -->
+    <!-- <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">Distribution of Service Time</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="allSessions" [scrollbarH]="true">
+
+          <ngx-datatable-column name="Service Number" prop="" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Service Time" prop="" [sortable]="false" [width]="200">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+      </div>
+    </div> -->
+    <!-- distribution of service time -->
+
+
+    <!-- queuing statistics for multi server -->
+    <!-- <div class="card card-statistics">
+      <div class="card-header">
+        <h4 class="card-title">Queuing of Multiple Servers</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="'force'" [headerHeight]="40"
+          [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="5" [rows]="allSessions" [scrollbarH]="true">
+
+        </ngx-datatable>
+      </div>
+    </div> -->
+    <!-- queuing statistics for multi server -->
+
+
+  </div>
+</div>

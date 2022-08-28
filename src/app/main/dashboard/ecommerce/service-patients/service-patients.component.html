@@ -1,0 +1,67 @@
+<div class="card-body">
+    <div class="row ">
+        <div class="col-12 mb-2">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Service Patients</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="activeModal.dismiss('Cross click')">X</button>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-md-right text-xs-left mb-xs-1" *ngIf="allPatientInQueue.length > 0">
+            <!-- <div class="custom-control custom-control-primary custom-switch">
+                <p class="mb-50 d-inline-block mr-1" *ngIf="toggleProperty">Realtime Service Time</p>
+                <p class="mb-50 d-inline-block mr-1" *ngIf="!toggleProperty">Custom Service Time</p>
+                <input type="checkbox" checked class="custom-control-input" id="customSwitch5" [(ngModel)]="toggleProperty" (change)="handleViewToggle(toggleProperty)"
+                />
+                <label class="custom-control-label" for="customSwitch5"></label>
+            </div> -->
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-12" *ngIf="allPatientInQueue.length > 0">
+                    <h5>Patients in queue</h5>
+                    <div class="row mt-1" *ngFor="let p of allPatientInQueue">
+                        <div class="col-md-4">
+                            {{p.name + " " + p.lastName}}
+                        </div>
+                        <div class="col-md-3">
+                            <select [(ngModel)]="selectedDoctor" id="doctors" class="form-control">
+                                <option [value]="d.id" *ngFor="let d of tempDocData">
+                                    {{d.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <!-- <div class="col-md-5" *ngIf="toggleView1">
+                            <button type="button" class="btn btn-sm btn-primary d-inline-block mr-1"
+                                *ngIf="serviceStart" rippleEffect (click)="setPatientServiceStartTime(p.id)">Service
+                                Start</button>
+                            <button type="button" class="btn btn-sm btn-danger d-inline-block" *ngIf="serviceEnd"
+                                rippleEffect (click)="setPatientServiceEndTime(p.id)">Service End</button>
+                        </div> -->
+                        <div class="col-md-5" >
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control" [(ngModel)]="patientServiceTime">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="button" class="btn btn-sm btn-primary d-inline-block"
+                                rippleEffect (click)="updatePatientService(p.id)">Add Service Time (Minutes)</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="allPatientInQueue.length == 0">
+                    <p>No Patient is in queue</p>
+                </div>
+                <!-- <div class="col-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary" rippleEffect>Submit</button>
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+    </div>
+</div>

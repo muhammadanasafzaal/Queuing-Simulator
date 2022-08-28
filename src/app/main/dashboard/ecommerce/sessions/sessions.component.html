@@ -1,0 +1,76 @@
+<div class="card-body">
+    <div class="row ">
+        <div class="col-12 mb-2">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add Session</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="activeModal.dismiss('Cross click')">X</button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <form [formGroup]="SessionDetailsForm" (ngSubmit)="SessionFormOnSubmit()">
+                <h6 class="mb-2">Session Details</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="date">Session Date</label>
+                                <input class="form-control" disabled (change)="checkValidDate($event.target.value)" formControlName="date" type="date" id="date" name="date" [ngClass]="{ 'is-invalid': SessionFormSubmitted && SessionForm.date.errors }">
+                            <div *ngIf="SessionFormSubmitted && SessionForm.date.errors" class="invalid-feedback">
+                                <div *ngIf="SessionForm.date.errors.required">Session Date is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="totalTimeOfEachSession">Total Time Of Each Session(Hours)</label>
+                            <input type="number" id="totalTimeOfEachSession" formControlName="totalTimeOfEachSession" class="form-control"
+                                [ngClass]="{ 'is-invalid': SessionFormSubmitted && SessionForm.totalTimeOfEachSession.errors }" />
+                            <div *ngIf="SessionFormSubmitted && SessionForm.totalTimeOfEachSession.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="SessionForm.totalTimeOfEachSession.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="editStatus">
+                        <div class="form-group">
+                            <label for="totalDoctorOnService">Total Doctor On Service</label>
+                            <input type="number" id="totalDoctorOnService" formControlName="totalDoctorOnService" class="form-control"
+                                [ngClass]="{ 'is-invalid': SessionFormSubmitted && SessionForm.totalDoctorOnService.errors }" />
+                            <div *ngIf="SessionFormSubmitted && SessionForm.totalDoctorOnService.errors" class="invalid-feedback">
+                                <div *ngIf="SessionForm.totalDoctorOnService.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="editStatus">
+                        <div class="form-group">
+                            <label for="totalPatientsArrived">Total Patients Arrived</label>
+                            <input type="number" id="totalPatientsArrived" formControlName="totalPatientsArrived" class="form-control"
+                                [ngClass]="{ 'is-invalid': SessionFormSubmitted && SessionForm.totalPatientsArrived.errors }" />
+                            <div *ngIf="SessionFormSubmitted && SessionForm.totalPatientsArrived.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="SessionForm.totalPatientsArrived.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="editStatus">
+                        <div class="form-group">
+                            <label for="averagePatientServiceTime">Average Patient Service Time (Minutes)</label>
+                            <input type="number" id="averagePatientServiceTime" formControlName="averagePatientServiceTime" class="form-control"
+                                [ngClass]="{ 'is-invalid': SessionFormSubmitted && SessionForm.averagePatientServiceTime.errors }" />
+                            <div *ngIf="SessionFormSubmitted && SessionForm.averagePatientServiceTime.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="SessionForm.averagePatientServiceTime.errors.required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary" rippleEffect>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

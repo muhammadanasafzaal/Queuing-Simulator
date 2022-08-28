@@ -1,0 +1,54 @@
+<div class="card-body">
+    <div class="row ">
+        <div class="col-12 mb-2">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add Simulation Data</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="activeModal.dismiss('Cross click')">X</button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <form [formGroup]="SimulationDataForm" (ngSubmit)="SimulationDataFormOnSubmit()">
+                <h6 class="mb-2">Simulation Details</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="arrivalRate">Arrival Rate (λ)</label>
+                            <input type="number" id="arrivalRate" formControlName="arrivalRate" class="form-control"
+                                [ngClass]="{ 'is-invalid': SimulationDataFormSubmitted && SimulationForm.arrivalRate.errors }" />
+                            <div *ngIf="SimulationDataFormSubmitted && SimulationForm.arrivalRate.errors" class="invalid-feedback">
+                                <div *ngIf="SimulationForm.arrivalRate.errors.required">Arrival Rate is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="serviceRate">Service Rate (µ)</label>
+                            <input type="number" id="serviceRate" formControlName="serviceRate" class="form-control"
+                                [ngClass]="{ 'is-invalid': SimulationDataFormSubmitted && SimulationForm.serviceRate.errors }" />
+                            <div *ngIf="SimulationDataFormSubmitted && SimulationForm.serviceRate.errors" class="invalid-feedback">
+                                <div *ngIf="SimulationForm.serviceRate.errors.required">Service Rate is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="serverCount">Number of Servers</label>
+                            <input type="number" id="serverCount" formControlName="serverCount" class="form-control"
+                                [ngClass]="{ 'is-invalid': SimulationDataFormSubmitted && SimulationForm.serverCount.errors }" />
+                            <div *ngIf="SimulationDataFormSubmitted && SimulationForm.serverCount.errors" class="invalid-feedback">
+                                <div *ngIf="SimulationForm.serverCount.errors.required">Server Count is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary" rippleEffect>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
