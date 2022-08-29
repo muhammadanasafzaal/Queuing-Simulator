@@ -283,61 +283,61 @@ export class SimulationFormComponent implements OnInit {
     }
     console.log(allServerStatus, 'all server status')
 
-    tmpArrServData = [
-      // {arrivalTime: 0, serviceTime: 0},
-      // {arrivalTime: 2, serviceTime: 7},
-      // {arrivalTime: 7, serviceTime: 0},
-      // {arrivalTime: 8, serviceTime: 0},
-      // {arrivalTime: 11, serviceTime: 7},
-      // {arrivalTime: 15, serviceTime: 15},
-      // {arrivalTime: 15, serviceTime: 13},
-      // {arrivalTime: 15, serviceTime: 0},
-      // {arrivalTime: 15, serviceTime: 0},
-      // {arrivalTime: 15, serviceTime: 10},
-      // {arrivalTime: 15, serviceTime: 6},
-      // {arrivalTime: 17, serviceTime: 7},
-      // {arrivalTime: 17, serviceTime: 0},
-      // {arrivalTime: 20, serviceTime: 15},
+  //   tmpArrServData = [
+  //     // {arrivalTime: 0, serviceTime: 0},
+  //     // {arrivalTime: 2, serviceTime: 7},
+  //     // {arrivalTime: 7, serviceTime: 0},
+  //     // {arrivalTime: 8, serviceTime: 0},
+  //     // {arrivalTime: 11, serviceTime: 7},
+  //     // {arrivalTime: 15, serviceTime: 15},
+  //     // {arrivalTime: 15, serviceTime: 13},
+  //     // {arrivalTime: 15, serviceTime: 0},
+  //     // {arrivalTime: 15, serviceTime: 0},
+  //     // {arrivalTime: 15, serviceTime: 10},
+  //     // {arrivalTime: 15, serviceTime: 6},
+  //     // {arrivalTime: 17, serviceTime: 7},
+  //     // {arrivalTime: 17, serviceTime: 0},
+  //     // {arrivalTime: 20, serviceTime: 15},
 
 
-          // {arrivalTime: 0, serviceTime: 1},
-          // {arrivalTime: 2, serviceTime: 4},
-          // {arrivalTime: 6, serviceTime: 5},
-          // {arrivalTime: 12, serviceTime: 2},
-          // {arrivalTime: 13, serviceTime: 12},
-          // {arrivalTime: 16, serviceTime: 2},
-          // {arrivalTime: 18, serviceTime: 11},
-          // {arrivalTime: 20, serviceTime: 2},
-          // {arrivalTime: 21, serviceTime: 2},
-          // {arrivalTime: 22, serviceTime: 2},
-          // {arrivalTime: 26, serviceTime: 1},
-          // {arrivalTime: 26, serviceTime: 4},
-          // {arrivalTime: 30, serviceTime: 3},
-          // {arrivalTime: 34, serviceTime: 6},
-          // {arrivalTime: 36, serviceTime: 1},
-          // {arrivalTime: 41, serviceTime: 1},
-          // {arrivalTime: 43, serviceTime: 9},
-          // {arrivalTime: 45, serviceTime: 2},
-          // {arrivalTime: 47, serviceTime: 1},
+  //         // {arrivalTime: 0, serviceTime: 1},
+  //         // {arrivalTime: 2, serviceTime: 4},
+  //         // {arrivalTime: 6, serviceTime: 5},
+  //         // {arrivalTime: 12, serviceTime: 2},
+  //         // {arrivalTime: 13, serviceTime: 12},
+  //         // {arrivalTime: 16, serviceTime: 2},
+  //         // {arrivalTime: 18, serviceTime: 11},
+  //         // {arrivalTime: 20, serviceTime: 2},
+  //         // {arrivalTime: 21, serviceTime: 2},
+  //         // {arrivalTime: 22, serviceTime: 2},
+  //         // {arrivalTime: 26, serviceTime: 1},
+  //         // {arrivalTime: 26, serviceTime: 4},
+  //         // {arrivalTime: 30, serviceTime: 3},
+  //         // {arrivalTime: 34, serviceTime: 6},
+  //         // {arrivalTime: 36, serviceTime: 1},
+  //         // {arrivalTime: 41, serviceTime: 1},
+  //         // {arrivalTime: 43, serviceTime: 9},
+  //         // {arrivalTime: 45, serviceTime: 2},
+  //         // {arrivalTime: 47, serviceTime: 1},
 
-      {arrivalTime: 0, serviceTime: 5},
-      {arrivalTime: 2, serviceTime: 7},
-      {arrivalTime: 7, serviceTime: 12},
-      {arrivalTime: 8, serviceTime: 8},
-      {arrivalTime: 11, serviceTime: 7},
-      {arrivalTime: 12, serviceTime: 7},
-      {arrivalTime: 14, serviceTime: 6},
-      {arrivalTime: 15, serviceTime: 15},
-      {arrivalTime: 15, serviceTime: 13},
-      {arrivalTime: 15, serviceTime: 11},
-      {arrivalTime: 15, serviceTime: 11},
-      {arrivalTime: 15, serviceTime: 10},
-      {arrivalTime: 15, serviceTime: 6},
-      {arrivalTime: 17, serviceTime: 7},
-      {arrivalTime: 17, serviceTime: 8},
-      {arrivalTime: 20, serviceTime: 15},
+  //     {arrivalTime: 0, serviceTime: 5},
+  //     {arrivalTime: 2, serviceTime: 7},
+  //     {arrivalTime: 7, serviceTime: 12},
+  //     {arrivalTime: 8, serviceTime: 8},
+  //     {arrivalTime: 11, serviceTime: 7},
+  //     {arrivalTime: 12, serviceTime: 7},
+  //     {arrivalTime: 14, serviceTime: 6},
+  //     {arrivalTime: 15, serviceTime: 15},
+  //     {arrivalTime: 15, serviceTime: 13},
+  //     {arrivalTime: 15, serviceTime: 11},
+  //     {arrivalTime: 15, serviceTime: 11},
+  //     {arrivalTime: 15, serviceTime: 10},
+  //     {arrivalTime: 15, serviceTime: 6},
+  //     {arrivalTime: 17, serviceTime: 7},
+  //     {arrivalTime: 17, serviceTime: 8},
+  //     {arrivalTime: 20, serviceTime: 15},
      
-  ]
+  // ]
 
   let temp = []
 
@@ -507,7 +507,7 @@ export class SimulationFormComponent implements OnInit {
 
 
             } 
-            else if (tmpArrServData[i].arrivalTime > tmpServData[i-1].endTime) {
+            else if (tmpArrServData[i].arrivalTime >= tmpServData[i-1].endTime) {
                 let serverToIgnore;
                 let serverFree;
 
