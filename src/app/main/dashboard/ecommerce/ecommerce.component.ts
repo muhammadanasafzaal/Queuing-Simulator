@@ -1390,13 +1390,22 @@ export class EcommerceComponent implements OnInit {
     // }
     modalRef.componentInstance.simData.subscribe((data) => {
       console.log(data);
+      this.simData =  []
+      this.simDataArr = null
+      this.tmpCustArrvData = null
+      this.tmpServDistTime = null
+      this.serverUtilRate = null
+      this.pieChartSeries = []
+      this.pieChartLabels = []
+      this.chartColors = []
+
       this.simData = data;
-      this.serverUtilRate = data.serviceUtilRate;
+      this.serverUtilRate = data.serverUtilRate;
       this.tmpCustArrvData =  this.simData.tmpCustArrvData
       this.tmpServDistTime = this.simData.tmpServDistTime
       this.simDataArr = this.simData.tmpServData
 
-      this.simData.serviceUtilRate.forEach(element => {
+      this.simData.serverUtilRate.forEach(element => {
         this.pieChartSeries.push(parseFloat(element.serverUtilRate.toFixed(2)))
         this.pieChartLabels.push("Server"+" "+element.serverNo)
         this.chartColors.push("#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16)}))

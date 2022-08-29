@@ -34,6 +34,21 @@ export class SimulationFormComponent implements OnInit {
   custArrvData: any[] = [];
   distServTimeData: any[] = [];
   totalServiceTime: number = 0;
+  toggleSimType: any;
+  tmpSimData: any = null;
+  slicedSimData: any;
+  totaInterArrvTime: any;
+  totalServiceTimee: any;
+  totalServerUtil: unknown[];
+  totalTurnAroundTime: any;
+  totalWaiInQueueTime: any;
+  totaResponseTime: any;
+  avgTimeSpentInSystem: number;
+  avgWaitTime: number;
+  avgResponseTime: number;
+  meanServiceTime: number;
+  avgTimeBwArrival: number;
+  serverUtilRate: any[];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -48,6 +63,8 @@ export class SimulationFormComponent implements OnInit {
       arrivalRate: ["", Validators.required],
       serviceRate: ["", Validators.required],
       serverCount: ["", Validators.required],
+      serverStart: [""],
+      serverEnd: [""]
     });
 
     // console.log(this.editData)
@@ -104,6 +121,7 @@ export class SimulationFormComponent implements OnInit {
   }
 
   SimulationDataFormOnSubmit() {
+    
     this.SimulationDataFormSubmitted = true;
 
     // stop here if form is invalid
@@ -112,7 +130,7 @@ export class SimulationFormComponent implements OnInit {
     }
 
     let formData = this.SimulationDataForm.value;
-
+    if(!this.toggleSimType) {
     //STEP 1: calculate all cummulative probability
     let arrRate = formData.arrivalRate;
     let serRate = formData.serviceRate;
@@ -839,6 +857,7 @@ export class SimulationFormComponent implements OnInit {
     //   }
     // }
     console.log(tmpServData);
+  
   }
 
 
@@ -848,6 +867,7 @@ export class SimulationFormComponent implements OnInit {
   }, 0);
 
   console.log(totaInterArrvTime, 'total inter arrival time')
+  this.totaInterArrvTime = totaInterArrvTime
 
   //total service time
   let totalServiceTime = tmpArrServData.reduce((accumulator, object) => {
@@ -855,7 +875,7 @@ export class SimulationFormComponent implements OnInit {
   }, 0);
 
   console.log(totalServiceTime, 'total service time')
-
+  this.totalServiceTimee =  totalServiceTime
 
 
   let tmpServUtil = []
@@ -879,6 +899,7 @@ export class SimulationFormComponent implements OnInit {
   );
 
   console.log(totalServerUtil, 'total server util')
+  this.totalServerUtil = totalServerUtil
 
     //turn around time
     let totalTurnAroundTime = tmpServData.reduce((accumulator, object) => {
@@ -886,6 +907,7 @@ export class SimulationFormComponent implements OnInit {
     }, 0);
   
     console.log(totalTurnAroundTime, 'total turn around time')
+    this.totalTurnAroundTime = totalTurnAroundTime
 
     //wait in queue time
     let totalWaiInQueueTime = tmpServData.reduce((accumulator, object) => {
@@ -893,7 +915,7 @@ export class SimulationFormComponent implements OnInit {
     }, 0);
   
     console.log(totalWaiInQueueTime, 'total wait in queue time')
-
+    this.totalWaiInQueueTime =totalWaiInQueueTime
 
     //response time
     let totaResponseTime = tmpServData.reduce((accumulator, object) => {
@@ -901,27 +923,33 @@ export class SimulationFormComponent implements OnInit {
     }, 0);
   
     console.log(totaResponseTime, 'total response time')
+    this.totaResponseTime = totaResponseTime
 
     //avg time spent in hospital
     let avgTimeSpentInSystem = totalTurnAroundTime/tmpServData.length
     console.log(avgTimeSpentInSystem, 'avg time spent in hospital')
+    this.avgTimeSpentInSystem = avgTimeSpentInSystem
 
     //avg wait time 
     let avgWaitTime = totalWaiInQueueTime/tmpServData.length
     console.log(avgWaitTime, 'avg wait time ')
+    this.avgWaitTime = avgWaitTime
 
     //avg response time
     let avgResponseTime = totaResponseTime/tmpServData.length
     console.log(avgResponseTime, 'avg response time')
+    this.avgResponseTime = avgResponseTime
 
     //mean service time
     let meanServiceTime = totalServiceTime/tmpServData.length
     console.log(meanServiceTime, 'mean service time')
-
+    this.meanServiceTime = meanServiceTime
+ 
     //avg time bw arrival of patient
     let avgTimeBwArrival = totaInterArrvTime/(tmpServData.length - 1)
     console.log(avgTimeBwArrival, 'avg time bw arrival of patient')
-
+    this.avgTimeBwArrival = avgTimeBwArrival
+    
     //avg waiting time of those who wait
     // let avgWaitingTimeWhoWait = totalWaiInQueueTime/(tmpServData.length - 1)
 
@@ -938,6 +966,7 @@ export class SimulationFormComponent implements OnInit {
       serverUtilRate.push(data)
     });
     console.log(serverUtilRate, 'server utilization rate')
+    this.serverUtilRate = serverUtilRate
 
     this.sendSimulationData(
       tmpServData,
@@ -955,6 +984,21 @@ export class SimulationFormComponent implements OnInit {
       serverUtilRate
       )
 
+    }
+    else{
+      const arrKeys1 = this.tmpSimData.map(el => el.startTime);
+      console.log(arrKeys1)
+      let startIndex  = arrKeys1.indexOf(formData.serverStart)
+      console.log(startIndex, 'service start index')
+
+      const arrKeys2 = this.tmpSimData.map(el => el.endTime);
+      console.log(arrKeys2)
+      let endIndex  = arrKeys2.lastIndexOf(formData.serverEnd)
+      console.log(endIndex, 'service end index')
+      this.slicedSimData = this.tmpSimData.slice(startIndex, endIndex+1)
+      console.log(this.slicedSimData)
+      this.sendSlicedSimData(this.slicedSimData)
+    }
   }
 
   sendSimulationData(
@@ -970,10 +1014,12 @@ export class SimulationFormComponent implements OnInit {
     avgResponseTime,
     meanServiceTime,
     avgTimeBwArrival,
-    serviceUtilRate
+    serverUtilRate
   ){
     let tmpCustArrvData = this.custArrvData
     let tmpServDistTime = this.distServTimeData
+    this.tmpSimData = tmpServData
+
     let data = {
       tmpServData,
       tmpCustArrvData,
@@ -989,7 +1035,45 @@ export class SimulationFormComponent implements OnInit {
       avgResponseTime,
       meanServiceTime,
       avgTimeBwArrival,
-      serviceUtilRate
+      serverUtilRate
+    }
+    this.simData.emit(data);
+  }
+
+  sendSlicedSimData(slicedSimData){
+
+    let tmpCustArrvData = this.custArrvData
+    let tmpServDistTime = this.distServTimeData
+    let totaInterArrvTime = this.totaInterArrvTime
+    let totalServiceTime = this.totalServiceTime
+    let totalServerUtil = this.totalServerUtil
+    let totalTurnAroundTime = this.totalTurnAroundTime
+    let totalWaiInQueueTime = this.totalWaiInQueueTime
+    let totaResponseTime = this.totaResponseTime
+    let avgTimeSpentInSystem = this.avgTimeSpentInSystem
+    let avgWaitTime = this.avgWaitTime
+    let avgResponseTime = this.avgResponseTime
+    let meanServiceTime = this.meanServiceTime
+    let avgTimeBwArrival = this.avgTimeBwArrival
+    let serverUtilRate = this.serverUtilRate
+    let tmpServData = slicedSimData;
+
+    let data = {
+      tmpServData,
+      tmpCustArrvData,
+      tmpServDistTime,
+      totaInterArrvTime,
+      totalServiceTime,
+      totalServerUtil,
+      totalTurnAroundTime,
+      totalWaiInQueueTime,
+      totaResponseTime,
+      avgTimeSpentInSystem,
+      avgWaitTime,
+      avgResponseTime,
+      meanServiceTime,
+      avgTimeBwArrival,
+      serverUtilRate
     }
     this.simData.emit(data);
   }
@@ -1002,4 +1086,5 @@ export class SimulationFormComponent implements OnInit {
   closeModal() {
     this.activeModal.dismiss("Cross click");
   }
+
 }

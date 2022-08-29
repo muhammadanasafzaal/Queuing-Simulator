@@ -8,11 +8,24 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-2">Simulation Details</h6>
+                </div>
+                <div class="col-md-6" *ngIf="tmpSimData != null">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="toggleSimType" />
+                        <label class="custom-control-label" for="customCheck1" *ngIf="!toggleSimType">Simulate by available service times</label>
+                        <label class="custom-control-label" for="customCheck1" *ngIf="toggleSimType">Complete simulation</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <form [formGroup]="SimulationDataForm" (ngSubmit)="SimulationDataFormOnSubmit()">
-                <h6 class="mb-2">Simulation Details</h6>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6" *ngIf="!toggleSimType">
                         <div class="form-group">
                             <label for="arrivalRate">Arrival Rate (λ)</label>
                             <input type="number" id="arrivalRate" formControlName="arrivalRate" class="form-control"
@@ -22,8 +35,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
+                    <div class="col-md-6" *ngIf="!toggleSimType">
+                        <div class="form-group" >
                             <label for="serviceRate">Service Rate (µ)</label>
                             <input type="number" id="serviceRate" formControlName="serviceRate" class="form-control"
                                 [ngClass]="{ 'is-invalid': SimulationDataFormSubmitted && SimulationForm.serviceRate.errors }" />
@@ -32,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" *ngIf="!toggleSimType">
                         <div class="form-group">
                             <label for="serverCount">Number of Servers</label>
                             <input type="number" id="serverCount" formControlName="serverCount" class="form-control"
@@ -40,6 +53,20 @@
                             <div *ngIf="SimulationDataFormSubmitted && SimulationForm.serverCount.errors" class="invalid-feedback">
                                 <div *ngIf="SimulationForm.serverCount.errors.required">Server Count is required</div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="toggleSimType">
+                        <div class="form-group">
+                            <label for="serverStart">Service Start</label>
+                            <input type="number" id="serverStart" formControlName="serverStart" class="form-control"
+                               />
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="toggleSimType">
+                        <div class="form-group">
+                            <label for="serverEnd">Service End</label>
+                            <input type="number" id="serverEnd" formControlName="serverEnd" class="form-control"
+                               />
                         </div>
                     </div>
                     <div class="col-12">
